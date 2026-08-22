@@ -115,9 +115,9 @@ p { line-height: 1.6; margin: 0; }
   gap: 6px;
 }
 .logo span { color: var(--copper-400); }
-.nav { display: flex; align-items: center; gap: 18px; }
+.nav { display: flex; align-items: center; gap: 15px; }
 .nav a {
-  font-size: 0.87rem;
+  font-size: 0.83rem;
   font-weight: 500;
   color: var(--mist-200);
   white-space: nowrap;
@@ -470,21 +470,23 @@ p { line-height: 1.6; margin: 0; }
 .group-list .group li::before{ content:"—"; position:absolute; left:0; color:var(--mist-400); }
 
 
-/* Услуги hover dropdown — simplified flat list (8 items), animated */
+/* Услуги hover dropdown — simplified flat list (8 items), animated. Desktop only. */
 .nav-dropdown{ position:relative; }
-.nav-dropdown > a::after{ content:" ▾"; font-size:.65em; opacity:.6; }
-.dropdown-panel{
-  position:absolute; top:100%; left:50%;
-  transform:translateX(-50%) translateY(-10px);
-  opacity:0; visibility:hidden; pointer-events:none;
-  transition:opacity .22s ease, transform .22s ease, visibility .22s;
-  background:var(--graphite-800); border-top:2px solid var(--copper-500);
-  min-width:620px; padding:22px; box-shadow:0 24px 48px rgba(0,0,0,.4); z-index:200;
-}
-.nav-dropdown:hover .dropdown-panel,
-.nav-dropdown:focus-within .dropdown-panel{
-  opacity:1; visibility:visible; pointer-events:auto;
-  transform:translateX(-50%) translateY(0);
+@media (min-width: 861px){
+  .nav-dropdown > a::after{ content:" ▾"; font-size:.65em; opacity:.6; }
+  .dropdown-panel{
+    position:absolute; top:100%; left:50%;
+    transform:translateX(-50%) translateY(-10px);
+    opacity:0; visibility:hidden; pointer-events:none;
+    transition:opacity .22s ease, transform .22s ease, visibility .22s;
+    background:var(--graphite-800); border-top:2px solid var(--copper-500);
+    min-width:620px; padding:22px; box-shadow:0 24px 48px rgba(0,0,0,.4); z-index:200;
+  }
+  .nav-dropdown:hover .dropdown-panel,
+  .nav-dropdown:focus-within .dropdown-panel{
+    opacity:1; visibility:visible; pointer-events:auto;
+    transform:translateX(-50%) translateY(0);
+  }
 }
 .dd-flat{ display:grid; grid-template-columns:repeat(4,1fr); gap:4px; }
 .dd-item{

@@ -19,9 +19,9 @@
   --copper-400: #c99464;
   --white: #fdfdfc;
 
-  --font-display: "Barlow Condensed", sans-serif;
+  --font-display: "Plus Jakarta Sans", sans-serif;
   --font-body: "Inter", sans-serif;
-  --font-mono: "IBM Plex Mono", monospace;
+  --font-mono: "JetBrains Mono", monospace;
 
   --container: 1120px;
 }
@@ -50,7 +50,7 @@ a { color: inherit; text-decoration: none; }
 
 h1, h2, h3 {
   font-family: var(--font-display);
-  font-weight: 600;
+  font-weight: 700;
   line-height: 1.05;
   margin: 0;
   letter-spacing: 0.01em;
@@ -115,20 +115,24 @@ p { line-height: 1.6; margin: 0; }
   gap: 6px;
 }
 .logo span { color: var(--copper-400); }
-.nav { display: flex; align-items: center; gap: 32px; }
+.nav { display: flex; align-items: center; gap: 18px; }
 .nav a {
-  font-size: 0.95rem;
+  font-size: 0.87rem;
+  font-weight: 500;
   color: var(--mist-200);
+  white-space: nowrap;
   transition: color 0.15s ease;
 }
 .nav a:hover, .nav a.active { color: var(--white); }
+.nav-dropdown { white-space: nowrap; }
 .nav-cta {
   background: var(--copper-500);
   color: var(--graphite-950) !important;
-  padding: 10px 20px;
+  padding: 10px 18px;
   border-radius: 2px;
-  font-weight: 600;
-  font-size: 0.9rem !important;
+  font-weight: 700;
+  font-size: 0.88rem !important;
+  white-space: nowrap;
 }
 .nav-cta:hover { background: var(--copper-400); }
 .nav-toggle { display: none; background: none; border: 0; color: var(--white); font-size: 1.5rem; cursor: pointer; }
@@ -216,18 +220,26 @@ p { line-height: 1.6; margin: 0; }
 .hero-glow .eyebrow{ text-shadow: 0 1px 10px rgba(0,0,0,.7); }
 
 @media (max-width: 860px){
-  .hero-glow{ min-height:auto; padding:64px 0 36px; flex-direction:column; align-items:flex-start; }
+  .hero-glow{ min-height:auto; padding:64px 0 0; flex-direction:column; align-items:flex-start; }
   .hero-glow .vignette{ left:-20%; width:100%; top:-30%; }
   .hero-glow h1{ max-width:100%; font-size: clamp(1.8rem, 7.5vw, 2.5rem); margin: 14px 0 16px; }
   .hero-glow p.lead{ max-width:100%; font-size:1rem; margin-bottom:22px; }
+  .hero-glow .hero-actions{ margin-bottom:28px; }
+  .spec-strip{ position:static; }
+  .spec-grid{ grid-template-columns:repeat(2,1fr); }
+  .spec-cell:nth-child(3), .spec-cell:nth-child(5){ border-left:none; }
+  .spec-cell:nth-child(5){ grid-column:1/-1; }
 }
 
 /* -------------------------------------------------------------------- */
 /* Spec strip — stat row styled like a drawing title block                */
 /* -------------------------------------------------------------------- */
 .spec-strip {
-  background: var(--graphite-950);
-  border-top: 1px solid var(--graphite-700);
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  z-index: 4;
+  background: rgba(20,22,25,0.32);
+  backdrop-filter: blur(1px);
 }
 .spec-grid {
   display: grid;
@@ -424,6 +436,7 @@ p { line-height: 1.6; margin: 0; }
 
 /* Alternating technology blocks (capabilities page) */
 .tech-block .tech-grid{ display:grid; grid-template-columns: 1.4fr 1fr; gap:48px; align-items:start; }
+.tech-photo{ width:100%; height:180px; object-fit:cover; border-radius:4px; margin-bottom:16px; }
 .tech-block .tech-num{ font-family: var(--font-mono); color: var(--copper-500); font-size:.9rem; letter-spacing:.08em; }
 .tech-block h2{ font-size: clamp(1.5rem, 2.6vw, 2rem); margin:12px 0 16px; }
 .tech-block p.desc{ color: var(--mist-400); margin-bottom:20px; max-width:60ch; }
@@ -453,6 +466,75 @@ p { line-height: 1.6; margin: 0; }
 .form-success h3{ font-size:1.3rem; margin-bottom:8px; }
 .form-success p{ color:var(--mist-200); }
 
+/* Featured capability cards (Услуги page) */
+.cap-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--steel-200); border:1px solid var(--steel-200); }
+.cap-card{ background:var(--white); }
+.cap-card img{ width:100%; height:220px; object-fit:cover; display:block; }
+.cap-card .cap-body{ padding:28px 30px; }
+.cap-card h3{ font-size:1.25rem; margin-bottom:10px; }
+.cap-card p{ color:var(--mist-400); font-size:.92rem; }
+@media (max-width:860px){ .cap-grid{ grid-template-columns:1fr; } }
+
+/* Grouped service list (Услуги page) */
+.group-list{ display:grid; grid-template-columns:repeat(3,1fr); gap:32px; }
+.group-list .group h4{ font-family:var(--font-mono); font-size:.78rem; text-transform:uppercase; letter-spacing:.06em; color:var(--copper-500); margin-bottom:14px; }
+.group-list .group ul{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:10px; }
+.group-list .group li{ font-size:.92rem; padding-left:16px; position:relative; }
+.group-list .group li::before{ content:"—"; position:absolute; left:0; color:var(--mist-400); }
+@media (max-width:860px){ .group-list{ grid-template-columns:1fr; gap:28px; } }
+
+/* Услуги hover dropdown — simplified flat list (8 items), animated */
+.nav-dropdown{ position:relative; }
+.nav-dropdown > a::after{ content:" ▾"; font-size:.65em; opacity:.6; }
+.dropdown-panel{
+  position:absolute; top:100%; left:50%;
+  transform:translateX(-50%) translateY(-10px);
+  opacity:0; visibility:hidden; pointer-events:none;
+  transition:opacity .22s ease, transform .22s ease, visibility .22s;
+  background:var(--graphite-800); border-top:2px solid var(--copper-500);
+  min-width:620px; padding:22px; box-shadow:0 24px 48px rgba(0,0,0,.4); z-index:200;
+}
+.nav-dropdown:hover .dropdown-panel,
+.nav-dropdown:focus-within .dropdown-panel{
+  opacity:1; visibility:visible; pointer-events:auto;
+  transform:translateX(-50%) translateY(0);
+}
+.dd-flat{ display:grid; grid-template-columns:repeat(4,1fr); gap:4px; }
+.dd-item{
+  display:flex; flex-direction:column; align-items:center; text-align:center; gap:10px;
+  padding:16px 8px; border-radius:4px;
+  transition:transform .18s ease, background-color .18s ease;
+}
+.dd-item:hover{ background:rgba(255,255,255,.06); transform:translateY(-3px); }
+.dd-item .icon{ color:var(--copper-400); transition:color .18s ease; }
+.dd-item:hover .icon{ color:var(--copper-300, #dba876); }
+.dd-item span{ font-size:.8rem; color:var(--mist-200); line-height:1.3; transition:color .18s ease; }
+.dd-item:hover span{ color:#fff; }
+@media (max-width:860px){
+  .dropdown-panel{
+    opacity:1; visibility:hidden; pointer-events:none; position:static; transform:none;
+    min-width:0; box-shadow:none; border-top:none; background:transparent;
+    padding:4px 0 4px 8px; max-height:0; overflow:hidden; transition:max-height .25s ease;
+  }
+  .nav.open .nav-dropdown .dropdown-panel{ visibility:visible; pointer-events:auto; max-height:600px; }
+  .dd-flat{ grid-template-columns:repeat(2,1fr); }
+  .nav-dropdown > a::after{ display:none; }
+}
+
+/* Услуги hub page — flat icon grid (mirrors the dropdown) */
+.service-icon-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--steel-200); border:1px solid var(--steel-200); }
+.service-icon-card{ background:var(--white); padding:32px 20px; text-align:center; transition:background-color .18s ease; }
+.service-icon-card:hover{ background:var(--steel-100); }
+.service-icon-card .icon{ color:var(--copper-500); margin:0 auto 16px; width:fit-content; }
+.service-icon-card h3{ font-size:1.05rem; margin-bottom:8px; }
+.service-icon-card p{ color:var(--mist-400); font-size:.85rem; }
+@media (max-width:860px){ .service-icon-grid{ grid-template-columns:repeat(2,1fr); } }
+
+/* Service detail page banner image */
+.service-banner{ height:320px; overflow:hidden; }
+.service-banner img{ width:100%; height:100%; object-fit:cover; display:block; }
+@media (max-width:860px){ .service-banner{ height:220px; } }
+
 /* Placeholder notice (visible only in this demo build) */
 .demo-flag {
   background: #3a2a1a;
@@ -471,9 +553,6 @@ p { line-height: 1.6; margin: 0; }
   .nav { position: fixed; top: 72px; right: 0; bottom: 0; left: 0; background: var(--graphite-800); flex-direction: column; align-items: flex-start; padding: 32px 24px; gap: 22px; transform: translateX(100%); transition: transform 0.2s ease; }
   .nav.open { transform: translateX(0); }
   .nav-toggle { display: block; }
-  .spec-grid { grid-template-columns: repeat(2, 1fr); }
-  .spec-cell:nth-child(3), .spec-cell:nth-child(5) { border-left: none; }
-  .spec-cell:nth-child(5) { grid-column: 1 / -1; }
   .card-grid { grid-template-columns: 1fr; }
   .process-grid { grid-template-columns: 1fr; gap: 28px; }
   .process-step:not(:last-child) { border-right: none; margin-right: 0; border-bottom: 1px dashed var(--graphite-700); padding-bottom: 24px; }
